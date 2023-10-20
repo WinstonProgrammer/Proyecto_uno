@@ -24,6 +24,8 @@ movimiento_ruedas = MoveTank(OUTPUT_A, OUTPUT_D)
 mPalo = LargeMotor(OUTPUT_B)
 #sensor que detecta obstáculos y objetos frente al robot
 sensor = UltrasonicSensor(INPUT_2)
+#medición continua en centímetros
+sensor.mode = "US-DIST-CM"
 
 #función para lanzar un objeto con el palo
 def lanzar(distancia):
