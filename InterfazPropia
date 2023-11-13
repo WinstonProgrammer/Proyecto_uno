@@ -1,0 +1,53 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+from tkinter import *
+import socket
+
+
+#Ventana
+ventana = tk.Tk()
+ventana.config(width=800, height=700)
+ventana.title("ANT-0T0")
+ventana.configure(bg="lightblue")
+
+#FUNCIONES
+def irAdelante(event = None):
+    clientSocket.send(bytes([ord('w')]))
+
+def irAtras(event = None):
+    clientSocket.send(bytes([ord('s')]))
+    
+def irIzquierda(event = None):
+    clientSocket.send(bytes([ord('a')]))
+
+def irDerecha(event = None):
+    clientSocket.send(bytes([ord('d')]))
+
+def detenerse(event = None):
+    clientSocket.send(bytes([ord('t')]))
+
+def inicioLanzar(event = None):
+    clientSocket.send(bytes([ord('l')]))
+
+def getAddress():
+    w_ip = Tk()
+    w_ip.geometry("300x100")
+
+    dato = StringVar(w_ip)
+    w_ip.title("Configurar Ip")
+    ip = ttk.Entry(w_ip,textvariable=dato).place(x=10,y=10)
+    button = Button(w_ip,text =" Aplicar",command=lambda:[conectar(dato.get()),w_ip.destroy()]).place(x=170,y=9)
+    print(dato.get())
+
+def conectar(address):
+    port = 2222
+    try:
+        clientSocket.connect((address,port))
+        messagebox.showinfo("Mensaje Servido","Cliente conectado al robot: {0} : {1}".format(address,port))
+    except socket.error:
+        messagebox.showwarning("Conexión erronea","No se ha logrado al conexíon, verifique la Ip {0}".format(address))
+        getAddres()
+        clientSocket.close()
+
+mainloop()
