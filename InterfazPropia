@@ -6,12 +6,12 @@ import socket
 
 
 #Ventana
-ventana = tk.Tk()
-ventana.config(width=800, height=700)
-ventana.title("ANT-0T0")
-ventana.configure(bg="lightblue")
+root = tk.Tk()
+root.config(width=800, height=400)
+root.configure(bg="darkred")
+root.title("ANT-0T0")
 
-#FUNCIONES
+#Acciones del robot
 def irAdelante(event = None):
     clientSocket.send(bytes([ord('w')]))
 
@@ -24,20 +24,21 @@ def irIzquierda(event = None):
 def irDerecha(event = None):
     clientSocket.send(bytes([ord('d')]))
 
-def detenerse(event = None):
+def parar(event = None):
     clientSocket.send(bytes([ord('t')]))
 
 def inicioLanzar(event = None):
     clientSocket.send(bytes([ord('l')]))
 
+#Interacción con el servidor
 def getAddress():
-    w_ip = Tk()
-    w_ip.geometry("300x100")
+    ip_root = Tk()
+    ip_root.geometry("200x100")
 
-    dato = StringVar(w_ip)
-    w_ip.title("Configurar Ip")
-    ip = ttk.Entry(w_ip,textvariable=dato).place(x=10,y=10)
-    button = Button(w_ip,text =" Aplicar",command=lambda:[conectar(dato.get()),w_ip.destroy()]).place(x=170,y=9)
+    dato = StringVar(ip_root)
+    ip_root.title("Configurar Ip")
+    ip = ttk.Entry(ip_root, textvariable=dato).place(x=10,y=10)
+    button = Button(ip_root, text ="Aplicar",command=lambda:[conectar(dato.get()), ip_root.destroy()]).place(x=30,y=40)
     print(dato.get())
 
 def conectar(address):
@@ -46,8 +47,14 @@ def conectar(address):
         clientSocket.connect((address,port))
         messagebox.showinfo("Mensaje Servido","Cliente conectado al robot: {0} : {1}".format(address,port))
     except socket.error:
-        messagebox.showwarning("Conexión erronea","No se ha logrado al conexíon, verifique la Ip {0}".format(address))
-        getAddres()
+        messagebox.showwarning("Conexión erronea","No se ha logrado al conexíon, verifique la ip {0}".format(address))
+        getAddress()
         clientSocket.close()
 
-mainloop()
+#Boton Conectar
+button_connect = tk.Button(root, text = "Conectar",command=getAddress,font=("Arial",12)).place(x=350,y=260)
+
+clientSocket = socket.socket()
+port = 2222
+ipAddress = ""
+root.mainloop()
