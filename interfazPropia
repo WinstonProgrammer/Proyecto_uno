@@ -51,10 +51,26 @@ def conectar(address):
         getAddress()
         clientSocket.close()
 
+#Imagenes
+imgLogo = tk.PhotoImage(file="logo_ant0t0.png")
+imgFlechaIzq = tk.PhotoImage(file="flecha_izquierda.png")
+imgFlechaSup = tk.PhotoImage(file="flecha_superior.png")
+imgFlechaDer = tk.PhotoImage(file="flecha_derecha.png")
+imgFlechaInf = tk.PhotoImage(file="flecha_inferior.png")
+imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
+
+etiqueta_logo = tk.Label(root, image=imgLogo, bg = "gray25").place(x=280,y=30)
+Bt_FlechaIzq = Button(root, image=imgFlechaIzq, bg = "gray25").place(x=50,y=150)
+Bt_FlechaSup = Button(root, image=imgFlechaSup, bg = "gray25").place(x=150,y=120)
+Bt_FlechaDer = Button(root, image=imgFlechaDer, bg = "gray25").place(x=250,y=150)
+Bt_FlechaInf = Button(root, image=imgFlechaInf, bg = "gray25").place(x=150,y=250)
+Bt_Apagar = Button(root, image=imgApagar, bg = "gray25").place(x=350,y=350)
+
+
 #Boton Conectar
 button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=350,y=260)
 
 clientSocket = socket.socket()
 port = 2222
-ipAddress = ""
+ipAddress = "192.168.71.214"
 root.mainloop()
