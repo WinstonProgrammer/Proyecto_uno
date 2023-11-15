@@ -8,7 +8,7 @@ import socket
 #Ventana
 root = tk.Tk()
 root.config(width=800, height=400)
-root.configure(bg="darkred")
+root.config(bg="darkred")
 root.title("ANT-0T0")
 
 #Acciones del robot
@@ -33,13 +33,13 @@ def inicioLanzar(event = None):
 #Interacción con el servidor
 def getAddress():
     ip_root = Tk()
-    ip_root.geometry("200x100")
+    ip_root.geometry("250x100")
 
-    dato = StringVar(ip_root)
+    ip = StringVar(ip_root)
     ip_root.title("Configurar Ip")
-    ip = ttk.Entry(ip_root, textvariable=dato).place(x=10,y=10)
-    button = Button(ip_root, text ="Aplicar",command=lambda:[conectar(dato.get()), ip_root.destroy()]).place(x=30,y=40)
-    print(dato.get())
+    campo_ip = ttk.Entry(ip_root, textvariable=ip).place(x=10,y=10)
+    bt_ip = Button(ip_root, text ="Aplicar",command=lambda:[conectar(ip.get()), ip_root.destroy()]).place(x=30,y=40)
+    print(ip.get())
 
 def conectar(address):
     port = 2222
@@ -52,7 +52,7 @@ def conectar(address):
         clientSocket.close()
 
 #Boton Conectar
-button_connect = tk.Button(root, text = "Conectar",command=getAddress,font=("Arial",12)).place(x=350,y=260)
+button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=350,y=260)
 
 clientSocket = socket.socket()
 port = 2222
