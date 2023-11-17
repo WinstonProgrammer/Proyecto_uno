@@ -7,7 +7,7 @@ import socket
 
 #Ventana
 root = tk.Tk()
-root.config(width=800, height=400)
+root.config(width=1000, height=500)
 root.config(bg="darkred")
 root.title("ANT-0T0")
 
@@ -59,12 +59,16 @@ imgFlechaDer = tk.PhotoImage(file="flecha_derecha.png")
 imgFlechaInf = tk.PhotoImage(file="flecha_inferior.png")
 imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
 
-etiqueta_logo = tk.Label(root, image=imgLogo, bg = "gray25").place(x=280,y=30)
-Bt_FlechaIzq = Button(root, image=imgFlechaIzq, bg = "gray25").place(x=50,y=150)
-Bt_FlechaSup = Button(root, image=imgFlechaSup, bg = "gray25").place(x=150,y=120)
-Bt_FlechaDer = Button(root, image=imgFlechaDer, bg = "gray25").place(x=250,y=150)
-Bt_FlechaInf = Button(root, image=imgFlechaInf, bg = "gray25").place(x=150,y=250)
-Bt_Apagar = Button(root, image=imgApagar, bg = "gray25").place(x=350,y=350)
+etiqueta_logo = tk.Label(root, image=imgLogo, bg = "gray25").place(x=280,y=10)
+Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda).place(x=50,y=150)
+Bt_FlechaIzq.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante).place(x=150,y=120)
+Bt_FlechaSup.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaDer = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaDer, command=irDerecha).place(x=250,y=150)
+Bt_FlechaDer.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaInf = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaInf, command=irAtras).place(x=150,y=250)
+Bt_FlechaInf.bind('<ButtonRelease-1>',on_realese)
+Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=350,y=350)
 
 
 #Boton Conectar
