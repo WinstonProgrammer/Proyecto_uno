@@ -27,7 +27,7 @@ while True:
         mover_izquierda()
     if (char == 'd'):
         mover_derecha()
-    if (char == 't'):
+    if (char == ' '):
         detener()
     if (char == 'l'):
         lanzar(2)
