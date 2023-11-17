@@ -12,23 +12,26 @@ root.config(bg="darkred")
 root.title("ANT-0T0")
 
 #Acciones del robot
-def irAdelante(event = None):
+def irAdelante():
     clientSocket.send(bytes([ord('w')]))
 
-def irAtras(event = None):
+def irAtras():
     clientSocket.send(bytes([ord('s')]))
     
-def irIzquierda(event = None):
+def irIzquierda():
     clientSocket.send(bytes([ord('a')]))
 
-def irDerecha(event = None):
+def irDerecha():
     clientSocket.send(bytes([ord('d')]))
 
-def parar(event = None):
+def parar():
     clientSocket.send(bytes([ord('t')]))
 
-def inicioLanzar(event = None):
+def inicioLanzar():
     clientSocket.send(bytes([ord('l')]))
+
+def soltar(event):
+    clientSocket.send(bytes([ord(' ')]))
 
 #Interacción con el servidor
 def getAddress():
@@ -61,13 +64,13 @@ imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
 
 etiqueta_logo = tk.Label(root, image=imgLogo, bg = "gray25").place(x=280,y=10)
 Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda).place(x=50,y=150)
-Bt_FlechaIzq.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaIzq.bind('<ButtonRelease-1>', soltar)
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante).place(x=150,y=120)
-Bt_FlechaSup.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaSup.bind('<ButtonRelease-1>', soltar)
 Bt_FlechaDer = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaDer, command=irDerecha).place(x=250,y=150)
-Bt_FlechaDer.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaDer.bind('<ButtonRelease-1>', soltar)
 Bt_FlechaInf = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaInf, command=irAtras).place(x=150,y=250)
-Bt_FlechaInf.bind('<ButtonRelease-1>',on_realese)
+Bt_FlechaInf.bind('<ButtonRelease-1>', soltar)
 Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=350,y=350)
 
 
