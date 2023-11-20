@@ -1,7 +1,7 @@
 import tkinter as tk
-from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import *
 import socket
 
 
@@ -23,9 +23,6 @@ def irIzquierda():
 
 def irDerecha():
     clientSocket.send(bytes([ord('d')]))
-
-def parar():
-    clientSocket.send(bytes([ord('t')]))
 
 def inicioLanzar():
     clientSocket.send(bytes([ord('l')]))
@@ -61,35 +58,35 @@ imgFlechaSup = tk.PhotoImage(file="flecha_superior.png")
 imgFlechaDer = tk.PhotoImage(file="flecha_derecha.png")
 imgFlechaInf = tk.PhotoImage(file="flecha_inferior.png")
 imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
+imgLanzar = tk.PhotoImage(file="imgLanzar.png")
 
-#Logo
-etiqueta_logo = tk.Label(root, image=imgLogo, bg = "gray25").place(x=280,y=10)
-
+etiqueta_logo = tk.Label(root, image=imgLogo, bg = "darkred").place(x=350,y=150)
 #Boton Flecha Izquierda
 Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda)
-Bt_FlechaIzq.place(x=50,y=150)
+Bt_FlechaIzq.place(x=50,y=190)
 Bt_FlechaIzq.bind('<ButtonRelease-1>', soltar)
-
 #Boton Flecha Superior
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante)
-Bt_FlechaSup.place(x=150,y=120)
+Bt_FlechaSup.place(x=150,y=100)
 Bt_FlechaSup.bind('<ButtonRelease-1>', soltar)
-
 #Boton Flecha Derecha
 Bt_FlechaDer = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaDer, command=irDerecha)
-Bt_FlechaDer.place(x=250,y=150)
+Bt_FlechaDer.place(x=250,y=190)
 Bt_FlechaDer.bind('<ButtonRelease-1>', soltar)
-
 #Boton Flecha Inferior
 Bt_FlechaInf = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaInf, command=irAtras)
-Bt_FlechaInf.place(x=150,y=250)
+Bt_FlechaInf.place(x=150,y=280)
 Bt_FlechaInf.bind('<ButtonRelease-1>', soltar)
 
-#Boton de apagado
-Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=350,y=350)
+#Boton Apagado
+Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=370)
+
+#Boton Lanzar
+Bt_Lanzar = Button(root, image=imgLanzar, bg = "darkred", command=inicioLanzar)
+Bt_Lanzar.place(x=650, y=210)
 
 #Boton Conectar
-button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=350,y=260)
+button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=440,y=90)
 
 clientSocket = socket.socket()
 port = 2222
