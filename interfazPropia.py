@@ -83,7 +83,7 @@ Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=37
 
 #Boton Lanzar
 Bt_Lanzar = Button(root, image=imgLanzar, bg = "darkred", command=inicioLanzar)
-Bt_Lanzar.place(x=650, y=210)
+Bt_Lanzar.place(x=660, y=170)
 
 #Boton Conectar
 button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=440,y=90)
