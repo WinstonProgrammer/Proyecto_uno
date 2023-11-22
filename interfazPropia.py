@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 import socket
+import time
+import sys
 
 
 #Ventana
@@ -10,6 +12,8 @@ root = tk.Tk()
 root.config(width=1000, height=500)
 root.config(bg="darkred")
 root.title("ANT-0T0")
+
+
 
 #Acciones del robot
 def irAdelante():
@@ -30,25 +34,12 @@ def inicioLanzar():
 def soltar(event):
     clientSocket.send(bytes([ord(' ')]))
 
-#Interacción con el servidor
-def getAddress():
-    ip_root = Tk()
-    ip_root.geometry("250x100")
-
-    ip = StringVar(ip_root)
-    ip_root.title("Configurar Ip")
-    campo_ip = ttk.Entry(ip_root, textvariable=ip).place(x=10,y=10)
-    bt_ip = Button(ip_root, text ="Aplicar",command=lambda:[conectar(ip.get()), ip_root.destroy()]).place(x=30,y=40)
-    print(ip.get())
-
 def conectar(address):
-    port = 2222
     try:
         clientSocket.connect((address,port))
         messagebox.showinfo("Mensaje Servido","Cliente conectado al robot: {0} : {1}".format(address,port))
     except socket.error:
         messagebox.showwarning("Conexión erronea","No se ha logrado al conexíon, verifique la ip {0}".format(address))
-        getAddress()
         clientSocket.close()
 
 #Imagenes
@@ -83,12 +74,25 @@ Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=37
 
 #Boton Lanzar
 Bt_Lanzar = Button(root, image=imgLanzar, bg = "darkred", command=inicioLanzar)
-Bt_Lanzar.place(x=660, y=170)
+Bt_Lanzar.place(x=650, y=210)
 
 #Boton Conectar
-button_connect = tk.Button(root, text="Conectar", command=getAddress, font=("Arial",12)).place(x=440,y=90)
+button_connect = tk.Button(root, text="Conectar", command= lambda: {conectar(ipAddress)}, font=("Arial",12)).place(x=440,y=90)
+ipAddress = "192.168.70.147"
 
+
+if len(sys.argv) > 2:
+    print("usage:client-laptop,py [IP-addr-of-robot]")
+    sys.exit(1)
+
+elif len(sys.argv) == 2:
+    ipAddress = sys.argv[1]
+    print("using specified IP address: {}".format(ipAddress))
+
+else:
+    print("using default IP address: {}".format(ipAddress))
+    
 clientSocket = socket.socket()
 port = 2222
-ipAddress = "192.168.71.214"
+
 root.mainloop()
