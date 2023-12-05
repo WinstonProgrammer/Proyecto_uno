@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 import socket
-import time
 import sys
 
 ev3_ip = "192.168.70.147"
@@ -53,17 +52,15 @@ imgLanzar = tk.PhotoImage(file="imgLanzar.png")
 
 etiqueta_logo = tk.Label(root, image=imgLogo, bg = "darkred").place(x=350,y=150)
 #Boton Flecha Izquierda
-Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda)
+Bt_FlechaIzq = Button(root, image=imgFlechaIzq, command=irIzquierda)
 Bt_FlechaIzq.place(x=50,y=190)
-Bt_FlechaIzq.bind('<ButtonRelease-1>', soltar)
 #Boton Flecha Superior
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante)
 Bt_FlechaSup.place(x=150,y=100)
 Bt_FlechaSup.bind('<ButtonRelease-1>', soltar)
 #Boton Flecha Derecha
-Bt_FlechaDer = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaDer, command=irDerecha)
+Bt_FlechaDer = Button(root, image=imgFlechaDer, command=irDerecha)
 Bt_FlechaDer.place(x=250,y=190)
-Bt_FlechaDer.bind('<ButtonRelease-1>', soltar)
 #Boton Flecha Inferior
 Bt_FlechaInf = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaInf, command=irAtras)
 Bt_FlechaInf.place(x=150,y=280)
@@ -74,7 +71,7 @@ Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=37
 
 #Boton Lanzar
 Bt_Lanzar = Button(root, image=imgLanzar, bg = "darkred", command=inicioLanzar)
-Bt_Lanzar.place(x=650, y=210)
+Bt_Lanzar.place(x=670, y=160)
 
 #Boton Conectar
 button_connect = tk.Button(root, text="Conectar", command= lambda: {conectar(ev3_ip)}, font=("Arial",12)).place(x=440,y=90)
