@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D, SpeedRPM, MoveTank
-from ev3dev2.sensor.lego import UltrasonicSensor
+from ev3dev2.motor import LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D, SpeedRPM, MoveTank
 from ev3dev2.sound import Sound
 import math
 import os
@@ -18,9 +17,11 @@ def debug_print(*args, **kwargs):
 os.system('setfont Lat15-TerminusBold14')
 
 #movimiento simultáneo de las ruedas(rueda izquierda, rueda derecha)
-movimiento_ruedas = OUTPUT_C
+movimiento_ruedas = MoveTank(OUTPUT_A, OUTPUT_B)
 #movimiento del palo del robot
-mPalo = LargeMotor(OUTPUT_B)
+mPalo = LargeMotor(OUTPUT_C)
+#movimiento de rotación de las ruedas delanteras
+mRotar = MediumMotor(OUTPUT_D)
 
 
 #función para lanzar un objeto con el palo
@@ -37,19 +38,19 @@ def lanzar(distancia):
 
 #función para mover el robot hacia adelante
 def mover_adelante():
-    movimiento_ruedas.on(100, 100)
+    movimiento_ruedas.on(-100, -100)
 
 #función para mover el robot hacia atras
 def mover_atras():
-    movimiento_ruedas.on(-100, -100)
+    movimiento_ruedas.on(100, 100)
 
 #función para mover el robot hacia la izquierda
 def mover_izquierda():
-    movimiento_ruedas.on(-100, 100)
+    mRotar.on(50)
 
 #función para mover el robot hacia la derecha
 def mover_derecha():
-    movimiento_ruedas.on(100, -100)
+    mRotar.on(-50)
 
 #función para detener el robot
 def detener():
