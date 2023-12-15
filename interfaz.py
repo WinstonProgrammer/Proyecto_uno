@@ -42,6 +42,13 @@ def conectar(address):
     except socket.error:
         messagebox.showwarning("Conexión erronea","No se ha logrado al conexíon, verifique la ip {0}".format(address))
         clientSocket.close()
+
+def tomar(valor):
+    try:
+        inicioLanzar(valor)
+        int(valor)
+    except ValueError:
+        messagebox.showerror("Error", "Debe ingresar un valor númerico para la distancia")
     
 
 #Imagenes
@@ -77,10 +84,8 @@ Bt_FlechaInf.bind('<ButtonRelease-1>', soltar)
 Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=370)
 
 #Boton Lanzar
-Bt_Lanzar = Button(root, image=imgLanzar, bg="darkred", command= lambda: {inicioLanzar((distancia.get()))})
+Bt_Lanzar = Button(root, image=imgLanzar, bg="darkred", command= lambda: {tomar(distancia.get())})
 Bt_Lanzar.place(x=680, y=160)
-if type(distancia.get()) == str:
-    messagebox.showerror("Error", "Debe ingresar un valor númerico para la distancia")
 
 
 #Boton Conectar
