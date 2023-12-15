@@ -5,13 +5,15 @@ from tkinter import *
 import socket
 import sys
 
-ev3_ip = "192.168.70.147"
+clientSocket = socket.socket()
+ev3_ip = "192.168.71.233"
 
 #Ventana
 root = tk.Tk()
 root.config(width=1000, height=500)
 root.config(bg="darkred")
 root.title("ANT-0T0")
+root.resizable(False, False)
 
 #Acciones del robot
 def irAdelante():
@@ -26,9 +28,10 @@ def irIzquierda():
 def irDerecha():
     clientSocket.send(bytes([ord('d')]))
 
-def inicioLanzar():
+def inicioLanzar(distancia):
     clientSocket.send(bytes([ord('l')]))
-
+    clientSocket.send(bytes(distancia, encoding='utf-8'))
+    
 def soltar(event):
     clientSocket.send(bytes([ord(' ')]))
 
@@ -50,10 +53,14 @@ imgFlechaInf = tk.PhotoImage(file="flecha_inferior.png")
 imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
 imgLanzar = tk.PhotoImage(file="imgLanzar.png")
 
+distancia = StringVar()
+caja_distancia = tk.Entry(root, textvariable=distancia).place(x=680, y=370)
+
 etiqueta_logo = tk.Label(root, image=imgLogo, bg = "darkred").place(x=350,y=150)
 #Boton Flecha Izquierda
-Bt_FlechaIzq = Button(root, image=imgFlechaIzq, command=irIzquierda)
+Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda)
 Bt_FlechaIzq.place(x=50,y=190)
+Bt_FlechaIzq.bind('<ButtonRelease-1>', soltar)
 #Boton Flecha Superior
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante)
 Bt_FlechaSup.place(x=150,y=100)
@@ -70,8 +77,11 @@ Bt_FlechaInf.bind('<ButtonRelease-1>', soltar)
 Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=370)
 
 #Boton Lanzar
-Bt_Lanzar = Button(root, image=imgLanzar, bg = "darkred", command=inicioLanzar)
-Bt_Lanzar.place(x=670, y=160)
+Bt_Lanzar = Button(root, image=imgLanzar, bg="darkred", command= lambda: {inicioLanzar((distancia.get()))})
+Bt_Lanzar.place(x=680, y=160)
+if type(distancia.get()) == str:
+    messagebox.showerror("Error", "Debe ingresar un valor númerico para la distancia")
+
 
 #Boton Conectar
 button_connect = tk.Button(root, text="Conectar", command= lambda: {conectar(ev3_ip)}, font=("Arial",12)).place(x=440,y=90)
@@ -87,8 +97,7 @@ elif len(sys.argv) == 2:
 
 else:
     print("using default IP address: {}".format(ev3_ip))
-    
-clientSocket = socket.socket()
+
 port = 2222
 
 root.mainloop()
