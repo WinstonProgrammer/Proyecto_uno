@@ -1,24 +1,25 @@
+#!/usr/bin/env python3
 import socket
 from funciones import *
 
 #se crea un socket
 s = socket.socket()
-s.settimeout(5)
+s.settimeout(20)
 print("Socket creado")
 port = 2222
-#se asocia una dirección IP y un número de puerto al socket
+#se asocia una direccion IP y un numero de puerto al socket
 s.bind(("", port))
 print("El socket se creo con puerto:{}".format(port))
-#se comienza a escuchar conexiones entrantes (máximo 5 conexiones pendientes)
+#se comienza a escuchar conexiones entrantes (maximo 5 conexiones pendientes)
 s.listen(5)
 print("The socket is listening....")
-#se acepta la conexión, creando un nuevo socket a partir de la conexion entrante y la dirección del cliente
+#se acepta la conexion, creando un nuevo socket a partir de la conexion entrante y la direccion del cliente
 connect, addr = s.accept()
 print("Se conecto a {}".format(addr))
 while True:
-    #se define el carácter que el socket del cliente recibe como dato
+    #se define el caracter que el socket del cliente recibe como dato
     rawByte = connect.recv(1)
-    #se traduce el carácter recibido
+    #se traduce el caracter recibido
     char = rawByte.decode('utf-8')
     if (char == 'w'):
         mover_adelante()
@@ -31,4 +32,7 @@ while True:
     if (char == ' '):
         detener()
     if (char == 'l'):
-        lanzar(2)
+        rawByte = connect.recv(1)
+        distancia = rawByte.decode('utf-8')
+
+        lanzar(int(distancia))
