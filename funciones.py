@@ -40,12 +40,12 @@ def mover_atras():
 #funcion para mover el robot hacia la izquierda
 def mover_izquierda():
     mRotar.on_for_degrees(30, 25)
-    movimiento_ruedas.on(100, -100)
+    movimiento_ruedas.on_for_seconds(100, -100, 1)
 
 #funcion para mover el robot hacia la derecha
 def mover_derecha():
     mRotar.on_for_degrees(-30, 25)
-    movimiento_ruedas.on(-100, 100)
+    movimiento_ruedas.on_for_seconds(-100, 100, 1)
 
 #funcion para detener el robot
 def detener():
