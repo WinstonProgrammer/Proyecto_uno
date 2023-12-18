@@ -65,9 +65,8 @@ caja_distancia = tk.Entry(root, textvariable=distancia).place(x=680, y=370)
 
 etiqueta_logo = tk.Label(root, image=imgLogo, bg = "darkred").place(x=350,y=150)
 #Boton Flecha Izquierda
-Bt_FlechaIzq = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaIzq, command=irIzquierda)
+Bt_FlechaIzq = Button(root, image=imgFlechaIzq, command=irIzquierda)
 Bt_FlechaIzq.place(x=50,y=190)
-Bt_FlechaIzq.bind('<ButtonRelease-1>', soltar)
 #Boton Flecha Superior
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante)
 Bt_FlechaSup.place(x=150,y=100)
