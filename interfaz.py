@@ -6,7 +6,7 @@ import socket
 import sys
 
 clientSocket = socket.socket()
-ev3_ip = "192.168.71.233"
+ev3_ip = "192.168.71.76"
 
 #Ventana
 root = tk.Tk()
@@ -46,7 +46,7 @@ def conectar(address):
 def tomar(valor):
     try:
         inicioLanzar(valor)
-        int(valor)
+        float(valor)
     except ValueError:
         messagebox.showerror("Error", "Debe ingresar un valor númerico para la distancia")
     
