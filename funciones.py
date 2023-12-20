@@ -14,12 +14,14 @@ movimiento_ruedas = MoveTank(OUTPUT_A, OUTPUT_D)
 mPalo = LargeMotor(OUTPUT_B)
 #movimiento de rotacion de las ruedas delanteras
 mRotar = MediumMotor(OUTPUT_C)
+mRotar.stop_action = 'hold'
+rotacion = 0
 
 
 #funcion para lanzar un objeto con el palo
 def lanzar(distancia):
     pi = math.pi
-    vel_necesaria = math.sqrt((4.9*distancia)/math.cos(pi/4)*math.sin(pi/4))
+    vel_necesaria = math.sqrt((4.9*distancia+1)/math.cos(pi/4)*math.sin(pi/4))
     vel_rpm = (60*vel_necesaria)/(2*pi*0.189)
     if vel_rpm < 175 and vel_rpm > 0:
         # Rotar el motor en -180 grados al 6% de velocidad
@@ -37,15 +39,20 @@ def mover_adelante():
 def mover_atras():
     movimiento_ruedas.on(100, 100)
 
-#funcion para mover el robot hacia la izquierda
+#funcion para rotar las ruedas hacia la izquierda
 def mover_izquierda():
-    mRotar.on_for_degrees(30, 25)
-    movimiento_ruedas.on_for_seconds(100, -100, 1)
+    global rotacion
+    if rotacion == 0 or rotacion == 25:
+        mRotar.on_for_degrees(30, 25)
+        rotacion -= 25
 
-#funcion para mover el robot hacia la derecha
+
+#funcion para rotar las ruedas hacia la derecha
 def mover_derecha():
-    mRotar.on_for_degrees(-30, 25)
-    movimiento_ruedas.on_for_seconds(-100, 100, 1)
+    global rotacion
+    if rotacion == 0 or rotacion == -25:
+        mRotar.on_for_degrees(-30, 25)
+        rotacion += 25
 
 #funcion para detener el robot
 def detener():
