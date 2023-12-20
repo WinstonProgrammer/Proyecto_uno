@@ -35,4 +35,4 @@ while True:
         rawByte = connect.recv(1)
         distancia = rawByte.decode('utf-8')
 
-        lanzar(int(distancia))
+        lanzar(float(distancia))
