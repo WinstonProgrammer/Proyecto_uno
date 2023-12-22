@@ -21,15 +21,18 @@ rotacion = 0
 #funcion para lanzar un objeto con el palo
 def lanzar(distancia):
     pi = math.pi
-    vel_necesaria = math.sqrt((4.9*distancia+1)/math.cos(pi/4)*math.sin(pi/4))
+    angulo = (5*pi)/36
+    degree = 25
+    tiempo = math.sqrt((0.08+math.tan(angulo)*distancia)/(4.9))
+    vel_necesaria = distancia/(math.cos(angulo)*tiempo)    
     vel_rpm = (60*vel_necesaria)/(2*pi*0.189)
     if vel_rpm < 175 and vel_rpm > 0:
-        # Rotar el motor en -180 grados al 6% de velocidad
-        mPalo.on_for_degrees(6,-180)
-        # Rotar el motor en 225 grados al porcentaje de velocidad de vel_rpm
-        mPalo.on_for_degrees(SpeedRPM(round(vel_rpm)),225)
-        # Rotar el motor en -45 grados al 6% de la velocidad
-        mPalo.on_for_degrees(6,-45)
+        # Rotar el motor en -300 grados al 6% de velocidad
+        mPalo.on_for_degrees(6,-300)
+        # Rotar el motor en 325 grados al porcentaje de velocidad de vel_rpm
+        mPalo.on_for_degrees(SpeedRPM(round(vel_rpm)),300+degree)
+        # Rotar el motor en -25 grados al 6% de la velocidad
+        mPalo.on_for_degrees(6,-degree)
 
 #funcion para mover el robot hacia adelante
 def mover_adelante():
