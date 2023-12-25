@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 import socket
@@ -14,6 +13,9 @@ root.config(width=1000, height=500)
 root.config(bg="darkred")
 root.title("ANT-0T0")
 root.resizable(False, False)
+#Se crea canvas
+lienzo = Canvas(root, width=1000, height=500)
+lienzo.place(x=0, y=0)
 
 #Acciones del robot
 def irAdelante():
@@ -31,6 +33,9 @@ def irDerecha():
 def inicioLanzar(distancia):
     clientSocket.send(bytes([ord('l')]))
     clientSocket.send(bytes(distancia, encoding='utf-8'))
+
+def stop():
+    clientSocket.send(bytes([ord(' ')]))
     
 def soltar(event):
     clientSocket.send(bytes([ord(' ')]))
@@ -49,46 +54,59 @@ def tomar(valor):
         float(valor)
     except ValueError:
         messagebox.showerror("Error", "Debe ingresar un valor númerico para la distancia")
-    
 
 #Imagenes
+imgFondo = tk.PhotoImage(file="FondoInterfaz.png")
+imgIniciar = tk.PhotoImage(file="BotonStart.png")
+imgWifi = tk.PhotoImage(file="Wifi.png")
 imgLogo = tk.PhotoImage(file="logo_ant0t0.png")
-imgFlechaIzq = tk.PhotoImage(file="flecha_izquierda.png")
-imgFlechaSup = tk.PhotoImage(file="flecha_superior.png")
-imgFlechaDer = tk.PhotoImage(file="flecha_derecha.png")
-imgFlechaInf = tk.PhotoImage(file="flecha_inferior.png")
-imgApagar = tk.PhotoImage(file="Boton_Apagar.png")
-imgLanzar = tk.PhotoImage(file="imgLanzar.png")
+imgFlechaIzq = tk.PhotoImage(file="FlechaIzquierda.png")
+imgFlechaSup = tk.PhotoImage(file="FlechaArriba.png")
+imgFlechaDer = tk.PhotoImage(file="FlechaDerecha.png")
+imgFlechaInf = tk.PhotoImage(file="FlechaInferior.png")
+imgApagar = tk.PhotoImage(file="BotonApagar(Rojo).png")
+imgLanzar = tk.PhotoImage(file="BotonDisparo(Rojo).png")
+imgDetener = tk.PhotoImage(file="BotonDetener(Verde).png")
 
-distancia = StringVar()
-caja_distancia = tk.Entry(root, textvariable=distancia).place(x=680, y=370)
+#Se agregan imagenes al canvas
+lienzo.create_image((1000, 500), image=imgFondo, anchor=SE)
+lienzo.create_image((360, 175), image=imgLogo, anchor=NW)
+lienzo.create_image((480, 30), image=imgWifi, anchor=NW)
 
-etiqueta_logo = tk.Label(root, image=imgLogo, bg = "darkred").place(x=350,y=150)
 #Boton Flecha Izquierda
 Bt_FlechaIzq = Button(root, image=imgFlechaIzq, command=irIzquierda)
-Bt_FlechaIzq.place(x=50,y=190)
+Bt_FlechaIzq.place(x=40,y=200)
+
 #Boton Flecha Superior
 Bt_FlechaSup = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaSup, command=irAdelante)
-Bt_FlechaSup.place(x=150,y=100)
+Bt_FlechaSup.place(x=150,y=80)
 Bt_FlechaSup.bind('<ButtonRelease-1>', soltar)
+
 #Boton Flecha Derecha
 Bt_FlechaDer = Button(root, image=imgFlechaDer, command=irDerecha)
-Bt_FlechaDer.place(x=250,y=190)
+Bt_FlechaDer.place(x=250,y=200)
+
 #Boton Flecha Inferior
 Bt_FlechaInf = Button(root, repeatdelay=50, repeatinterval=50, image=imgFlechaInf, command=irAtras)
-Bt_FlechaInf.place(x=150,y=280)
+Bt_FlechaInf.place(x=150,y=310)
 Bt_FlechaInf.bind('<ButtonRelease-1>', soltar)
 
-#Boton Apagado
-Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=440,y=370)
+#Boton Stop
+Bt_Stop = Button(root, image=imgDetener, command=stop)
+Bt_Stop.place(x=148, y=195)
+
+#Boton Apagar
+Bt_Apagar = Button(root, image=imgApagar, command=root.destroy).place(x=435,y=370)
 
 #Boton Lanzar
-Bt_Lanzar = Button(root, image=imgLanzar, bg="darkred", command= lambda: {tomar(distancia.get())})
-Bt_Lanzar.place(x=680, y=160)
+distancia = StringVar()
+caja_distancia = tk.Entry(root, textvariable=distancia).place(x=700, y=370)
+Bt_Lanzar = Button(root, image=imgLanzar, command= lambda: {tomar(distancia.get())})
+Bt_Lanzar.place(x=700, y=160)
 
 
 #Boton Conectar
-button_connect = tk.Button(root, text="Conectar", command= lambda: {conectar(ev3_ip)}, font=("Arial",12)).place(x=440,y=90)
+button_connect = tk.Button(root, image=imgIniciar, command= lambda: {conectar(ev3_ip)}).place(x=419,y=70)
 
 
 if len(sys.argv) > 2:
