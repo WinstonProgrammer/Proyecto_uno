@@ -1,0 +1,11 @@
+#función para lanzar una pelota con el palo
+def lanzar(distancia):
+    pi = math.pi
+    vel_necesaria = math.sqrt((4.9*distancia+2)/math.cos(pi/4)*math.sin(pi/4))
+    vel_rpm = (60*vel_necesaria)/(2*pi*0.189)
+    #rotar el palo en -180 grados al 6% de la velocidad máxima
+    mPalo.on_for_degrees(6,-180)
+    #rotar el palo en 225 grados al porcentaje de vel_rpm de la velocidad máxima
+    mPalo.on_for_degrees(SpeedRPM(round(vel_rpm)),225)
+    #rotar el palo en -45 grados al 6% de la velocidad máxima
+    mPalo.on_for_degrees(6,-45)
